@@ -25,7 +25,7 @@ public class MainPageController{
         VBox root = loader.load();
         VacanciesListController controller = loader.getController();
 
-        controller.setLink(searchField.getText());
+        controller.setSearchText(searchField.getText());
         controller.init();
 
         Scene showVacancies = new Scene(root);

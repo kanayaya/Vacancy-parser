@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class VacanciesListController {
-    private String link;
+    private String searchText;
     private ArrayList<VacancyBlock> vacanciesArray;
 
     @FXML
@@ -25,29 +25,32 @@ public class VacanciesListController {
     @FXML
     Button backButton;
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setSearchText(String searchText) {
+        this.searchText = searchText;
     }
 
     public void init() {
-        vacanciesArray = tryToGetVacancies();
+        vacanciesArray = searchVacancies();
 
-        if (vacanciesArray.isEmpty()) {
+        if (vacanciesArray.isEmpty()) { // Maybe user wrote search text with wrong keyboard layout
             vacanciesArray = searchVacanciesWithAnotherLayout();
         }
 
         VBox vacanciesList = new VBox(10, getViewedVacancies(vacanciesArray));
         mainPane.setContent(vacanciesList);
     }
-    private ArrayList<VacancyBlock> tryToGetVacancies() {
-        VacanciesThread vacanciesThread = new VacanciesThread(ControllerStaticUtils.getLinkWithSearchText(link));
-        vacanciesThread.start();
-        return vacanciesThread.getVacancies();
+    private ArrayList<VacancyBlock> searchVacancies() {
+        return startSearch(ControllerStaticUtils.getLinkWithSearchText(searchText))
+                .getVacancies();
     }
     private ArrayList<VacancyBlock> searchVacanciesWithAnotherLayout() {
-        VacanciesThread vacanciesThread = new VacanciesThread(ControllerStaticUtils.getLinkWithReversedText(link));
+        return startSearch(ControllerStaticUtils.getLinkWithReversedText(searchText))
+                .getVacancies();
+    }
+    private VacanciesThread startSearch(String link) {
+        VacanciesThread vacanciesThread = new VacanciesThread(ControllerStaticUtils.getLinkWithReversedText(searchText));
         vacanciesThread.start();
-        return vacanciesThread.getVacancies();
+        return vacanciesThread;
     }
     private GridPane[] getViewedVacancies(ArrayList<VacancyBlock> vacanciesArray) {
         return vacanciesArray.stream()
