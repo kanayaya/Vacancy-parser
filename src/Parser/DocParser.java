@@ -1,6 +1,5 @@
 package Parser;
 
-import javafx.scene.layout.GridPane;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;

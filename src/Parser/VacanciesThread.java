@@ -12,11 +12,6 @@ public class VacanciesThread extends Thread {
         this.link = link;
         this.setPriority(2);
     }
-    public VacanciesThread() {
-        String searchInIrkutsk = "https://hh.ru/search/vacancy?fromSearchLine=true&st=searchVacancy&text=java&area=1124";
-        this.link = searchInIrkutsk;
-        this.setPriority(2);
-    }
     public ArrayList<VacancyBlock> getVacancies() {
         while (vacancies == null) ;//wait
         return vacancies;

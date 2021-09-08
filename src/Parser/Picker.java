@@ -4,10 +4,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 public class Picker {
-
-    public static Document getPageOf(HHVacancyBlock vacancy) throws InterruptedException {
-        return repeatedlyGetPage(vacancy.link);
-    }
     public static Document repeatedlyGetPage(String link) throws InterruptedException {
         Document wholePage;
         while (true) {
