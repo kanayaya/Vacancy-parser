@@ -1,6 +1,7 @@
 package View;
 
 import Parser.VacanciesThread;
+import Parser.VacancyBlock;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,10 +14,12 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class VacanciesListController {
     private String link;
-    private ArrayList<GridPane> vacanciesArray;
+    private ArrayList<VacancyBlock> vacanciesArray;
+
     @FXML
     ScrollPane mainPane;
     @FXML
@@ -37,7 +40,10 @@ public class VacanciesListController {
             vacanciesArray.addAll(vacanciesThread.getVacancies());
         }
 
-        GridPane[] vacancies = vacanciesArray.toArray(new GridPane[0]);
+        GridPane[] vacancies = vacanciesArray.stream()
+                .map(VacancyBlock::getView)
+                .collect(Collectors.toList())
+                .toArray(GridPane[]::new);
         VBox vacanciesList = new VBox(10, vacancies);
         mainPane.setContent(vacanciesList);
     }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 public class VacanciesThread extends Thread {
-    private volatile ArrayList<GridPane> vacancies = null;
+    private volatile ArrayList<VacancyBlock> vacancies = null;
     private final String link;
 
     public VacanciesThread(String link) {
@@ -19,7 +19,7 @@ public class VacanciesThread extends Thread {
         this.link = searchInIrkutsk;
         this.setPriority(2);
     }
-    public ArrayList<GridPane> getVacancies() {
+    public ArrayList<VacancyBlock> getVacancies() {
         while (vacancies == null) ;//wait
         return vacancies;
     }
@@ -30,7 +30,7 @@ public class VacanciesThread extends Thread {
                 System.out.println("Taking vacancies...");
                 this.vacancies = DocParser.getVacancies(this.link);
             } catch (NoSuchElementException | InterruptedException e) {
-                System.out.println("Error in BlockParser. Maybe wrong key/value or target changed attribute:  " + e.toString());
+                System.out.println("Error in BlockParser. Maybe wrong key/value or target changed attribute:  " + e);
             }
         }
     }

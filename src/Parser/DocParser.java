@@ -9,13 +9,13 @@ import java.util.ArrayList;
 
 public class DocParser {
 
-    public static ArrayList<GridPane> getVacancies(String link) throws InterruptedException {
-        ArrayList<GridPane> vacancies = new ArrayList<>(20);
+    public static ArrayList<VacancyBlock> getVacancies(String link) throws InterruptedException {
+        ArrayList<VacancyBlock> vacancies = new ArrayList<>(20);
         System.out.println("Going to picker...");
         Document wholePage = Picker.repeatedlyGetPage(link);
         Elements vacancyBlocks = wholePage.getElementsByAttributeValue("class", "vacancy-serp-item");
         for (Element vacancyBlock: vacancyBlocks) {
-            vacancies.add(HHVacancyFabric.getVacancyBlock(vacancyBlock).getView());
+            vacancies.add(HHVacancyFabric.getVacancyBlock(vacancyBlock));
             for (Element element: vacancyBlock.getElementsByAttribute("data-qa")) {
                 System.out.println(element.attr("data-qa") + ':');
                 System.out.println(element.text());
