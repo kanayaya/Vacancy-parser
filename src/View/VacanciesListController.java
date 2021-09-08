@@ -30,9 +30,16 @@ public class VacanciesListController implements Initializable {
     }
 
     public void init() {
-        VacanciesThread vacanciesThread = new VacanciesThread(link);
+        VacanciesThread vacanciesThread = new VacanciesThread(ControllerStaticUtils.getLinkWithSearchText(link));
         vacanciesThread.start();
         ArrayList<GridPane> vacanciesArray = vacanciesThread.getVacancies();
+
+        if (vacanciesArray.isEmpty()) {
+            vacanciesThread = new VacanciesThread(ControllerStaticUtils.getLinkWithReversedText(link));
+            vacanciesThread.start();
+            vacanciesArray.addAll(vacanciesThread.getVacancies());
+        }
+
         GridPane[] vacancies = vacanciesArray.toArray(new GridPane[0]);
         VBox vacanciesList = new VBox(10, vacancies);
         mainPane.setContent(vacanciesList);

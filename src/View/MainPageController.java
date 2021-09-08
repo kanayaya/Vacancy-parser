@@ -27,9 +27,8 @@ public class MainPageController implements Initializable {
 
         VBox root = loader.load();
         VacanciesListController controller = loader.getController();
-        String link = Objects.requireNonNull(ControllerStaticUtils.getLinkFromSearchText(searchField.getText()));
 
-        controller.setLink(link);
+        controller.setLink(searchField.getText());
         controller.init();
 
         Scene showVacancies = new Scene(root);
