@@ -48,7 +48,7 @@ public class VacanciesListController {
                 .getVacancies();
     }
     private VacanciesThread startSearch(String link) {
-        VacanciesThread vacanciesThread = new VacanciesThread(ControllerStaticUtils.getLinkWithReversedText(searchText));
+        VacanciesThread vacanciesThread = new VacanciesThread(link);
         vacanciesThread.start();
         return vacanciesThread;
     }
