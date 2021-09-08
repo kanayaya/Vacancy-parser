@@ -3,8 +3,6 @@ package View;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 
-import java.util.HashMap;
-
 class ControllerStaticUtils {
 
     protected static Stage getStageOf(Node node) {

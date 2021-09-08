@@ -30,22 +30,30 @@ public class VacanciesListController {
     }
 
     public void init() {
-        VacanciesThread vacanciesThread = new VacanciesThread(ControllerStaticUtils.getLinkWithSearchText(link));
-        vacanciesThread.start();
-        vacanciesArray = vacanciesThread.getVacancies();
+        vacanciesArray = tryToGetVacancies();
 
         if (vacanciesArray.isEmpty()) {
-            vacanciesThread = new VacanciesThread(ControllerStaticUtils.getLinkWithReversedText(link));
-            vacanciesThread.start();
-            vacanciesArray.addAll(vacanciesThread.getVacancies());
+            vacanciesArray = searchVacanciesWithAnotherLayout();
         }
 
-        GridPane[] vacancies = vacanciesArray.stream()
+        VBox vacanciesList = new VBox(10, getViewedVacancies(vacanciesArray));
+        mainPane.setContent(vacanciesList);
+    }
+    private ArrayList<VacancyBlock> tryToGetVacancies() {
+        VacanciesThread vacanciesThread = new VacanciesThread(ControllerStaticUtils.getLinkWithSearchText(link));
+        vacanciesThread.start();
+        return vacanciesThread.getVacancies();
+    }
+    private ArrayList<VacancyBlock> searchVacanciesWithAnotherLayout() {
+        VacanciesThread vacanciesThread = new VacanciesThread(ControllerStaticUtils.getLinkWithReversedText(link));
+        vacanciesThread.start();
+        return vacanciesThread.getVacancies();
+    }
+    private GridPane[] getViewedVacancies(ArrayList<VacancyBlock> vacanciesArray) {
+        return vacanciesArray.stream()
                 .map(VacancyBlock::getView)
                 .collect(Collectors.toList())
                 .toArray(GridPane[]::new);
-        VBox vacanciesList = new VBox(10, vacancies);
-        mainPane.setContent(vacanciesList);
     }
 
     public void backToSearch() throws IOException {

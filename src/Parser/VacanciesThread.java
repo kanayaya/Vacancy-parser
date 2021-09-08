@@ -1,8 +1,6 @@
 package Parser;
 
 
-import javafx.scene.layout.GridPane;
-
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
