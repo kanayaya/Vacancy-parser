@@ -19,7 +19,7 @@ public class MainPageController{
     private TextField searchField;
 
     @FXML
-    private void click(ActionEvent event) throws IOException {
+    private void click(ActionEvent event) throws IOException, InterruptedException {
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(this.getClass().getResource("vacanciesList.fxml")));
 
         VBox root = loader.load();

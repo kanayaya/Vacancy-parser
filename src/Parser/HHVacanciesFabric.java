@@ -7,9 +7,13 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
-public class HHVacanciesFabric {
+public class HHVacanciesFabric extends VacanciesFabric{
 
-    public static ArrayList<VacancyBlock> getVacancies(Document wholePage) {
+    public HHVacanciesFabric(String link) throws InterruptedException {
+        super(link);
+    }
+    @Override
+    public ArrayList<VacancyBlock> getVacanciesFrom(Document wholePage) {
         Elements vacancyBlocks = wholePage.getElementsByAttributeValue("class", "vacancy-serp-item");
         return HHVacanciesFabric.makeVacanciesArray(vacancyBlocks);
     }

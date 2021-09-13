@@ -1,5 +1,6 @@
 package View;
 
+import Parser.HHVacanciesFabric;
 import Parser.VacanciesThread;
 import Parser.VacancyBlock;
 import javafx.fxml.FXML;
@@ -29,7 +30,7 @@ public class VacanciesListController {
         this.searchText = searchText;
     }
 
-    public void init() {
+    public void init() throws InterruptedException {
         vacanciesArray = searchVacancies();
 
         if (vacanciesArray.isEmpty()) { // Maybe user wrote search text with wrong keyboard layout
@@ -39,16 +40,16 @@ public class VacanciesListController {
         VBox vacanciesList = new VBox(10, getViewedVacancies(vacanciesArray));
         mainPane.setContent(vacanciesList);
     }
-    private ArrayList<VacancyBlock> searchVacancies() {
+    private ArrayList<VacancyBlock> searchVacancies() throws InterruptedException {
         return startSearch(ControllerStaticUtils.getLinkWithSearchText(searchText))
                 .getVacancies();
     }
-    private ArrayList<VacancyBlock> searchVacanciesWithAnotherLayout() {
+    private ArrayList<VacancyBlock> searchVacanciesWithAnotherLayout() throws InterruptedException {
         return startSearch(ControllerStaticUtils.getLinkWithReversedText(searchText))
                 .getVacancies();
     }
-    private VacanciesThread startSearch(String link) {
-        VacanciesThread vacanciesThread = new VacanciesThread(link);
+    private VacanciesThread startSearch(String link) throws InterruptedException {
+        VacanciesThread vacanciesThread = new VacanciesThread(new HHVacanciesFabric(link));
         vacanciesThread.start();
         return vacanciesThread;
     }

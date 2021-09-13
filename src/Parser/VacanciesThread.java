@@ -6,10 +6,10 @@ import java.util.NoSuchElementException;
 
 public class VacanciesThread extends Thread {
     private volatile ArrayList<VacancyBlock> vacancies = null;
-    private final String link;
+    private final VacanciesFabric fabric;
 
-    public VacanciesThread(String link) {
-        this.link = link;
+    public VacanciesThread(VacanciesFabric fabric) {
+        this.fabric = fabric;
         this.setPriority(2);
     }
     public ArrayList<VacancyBlock> getVacancies() {
@@ -21,9 +21,9 @@ public class VacanciesThread extends Thread {
         synchronized (this) {
             try {
                 System.out.println("Taking vacancies...");
-                this.vacancies = HHVacanciesFabric.getVacancies(Picker.repeatedlyGetPage(link));
-            } catch (NoSuchElementException | InterruptedException e) {
-                System.out.println("Error in BlockParser. Maybe wrong key/value or target changed attribute:  " + e);
+                this.vacancies = fabric.getVacancies();
+            } catch (NoSuchElementException e) {
+                System.out.println("Error in " + fabric.getClass().toString() + ". Maybe wrong key/value or target changed attribute:  " + e);
             }
         }
     }
