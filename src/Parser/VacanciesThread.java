@@ -21,7 +21,7 @@ public class VacanciesThread extends Thread {
         synchronized (this) {
             try {
                 System.out.println("Taking vacancies...");
-                this.vacancies = DocParser.getVacancies(this.link);
+                this.vacancies = HHVacanciesFabric.getVacancies(Picker.repeatedlyGetPage(link));
             } catch (NoSuchElementException | InterruptedException e) {
                 System.out.println("Error in BlockParser. Maybe wrong key/value or target changed attribute:  " + e);
             }
