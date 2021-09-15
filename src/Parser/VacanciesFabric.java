@@ -5,7 +5,7 @@ import org.jsoup.nodes.Document;
 import java.util.ArrayList;
 
 public abstract class VacanciesFabric {
-    private ArrayList<VacancyBlock> vacancies;
+    private final ArrayList<VacancyBlock> vacancies;
 
     public VacanciesFabric(String link) throws InterruptedException {
         this.vacancies = getVacanciesFrom(Picker.repeatedlyGetPage(link));

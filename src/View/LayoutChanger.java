@@ -6,13 +6,14 @@ public class LayoutChanger {
     private static final String rusLayout    = "ё1234567890-=йцукенгшщзхъ\\фывапролджэячсмитьбю.Ё!\"№;%:?*()_+ЙЦУКЕНГШЩЗХЪ/ФЫВАПРОЛДЖЭЯЧСМИТЬБЮ,";
     private static final String qwertyLayout = "`1234567890-=qwertyuiop[]\\asdfghjkl;'zxcvbnm,./~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:\"ZXCVBNM<>?";
 
-    public static String changeLayout(String... texts) {
+    public static String changeLayout(String text) {
+        String[] words = text.split(" ");
         String newText = "";
-        for (String text: texts) {
-            if (isMadeWith(text, rusLayout)) {
-                newText = newText.concat(" " + convertWithMap(text, makeMap(rusLayout, qwertyLayout)));
-            } else if (isMadeWith(text, qwertyLayout)){
-                newText = newText.concat(" " + convertWithMap(text, makeMap(qwertyLayout, rusLayout)));
+        for (String word: words) {
+            if (isMadeWith(word, rusLayout)) {
+                newText = newText.concat(" " + convertWithMap(word, makeMap(rusLayout, qwertyLayout)));
+            } else if (isMadeWith(word, qwertyLayout)){
+                newText = newText.concat(" " + convertWithMap(word, makeMap(qwertyLayout, rusLayout)));
             }
         }
         return newText;

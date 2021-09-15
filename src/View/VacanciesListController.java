@@ -31,7 +31,7 @@ public class VacanciesListController {
     }
 
     public void init() throws InterruptedException {
-        vacanciesArray = searchVacancies();
+        vacanciesArray = searchVacancies(searchText);
 
         if (vacanciesArray.isEmpty()) { // Maybe user wrote search text with wrong keyboard layout
             vacanciesArray = searchVacanciesWithAnotherLayout();
@@ -40,15 +40,14 @@ public class VacanciesListController {
         VBox vacanciesList = new VBox(10, getViewedVacancies(vacanciesArray));
         mainPane.setContent(vacanciesList);
     }
-    private ArrayList<VacancyBlock> searchVacancies() throws InterruptedException {
-        return startSearch(ControllerStaticUtils.getLinkWithSearchText(searchText))
+    private ArrayList<VacancyBlock> searchVacancies(String searchText) throws InterruptedException {
+        return startSearchThread(searchText)
                 .getVacancies();
     }
     private ArrayList<VacancyBlock> searchVacanciesWithAnotherLayout() throws InterruptedException {
-        return startSearch(ControllerStaticUtils.getLinkWithReversedText(searchText))
-                .getVacancies();
+        return searchVacancies(LayoutChanger.changeLayout(searchText));
     }
-    private VacanciesThread startSearch(String link) throws InterruptedException {
+    private VacanciesThread startSearchThread(String link) throws InterruptedException {
         VacanciesThread vacanciesThread = new VacanciesThread(new HHVacanciesFabric(link));
         vacanciesThread.start();
         return vacanciesThread;
@@ -61,7 +60,7 @@ public class VacanciesListController {
     }
 
     public void backToSearch() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("mainPage.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("FXML/mainPage.fxml")));
         Scene scene = new Scene(root);
         ControllerStaticUtils.getStageOf(backButton).setScene(scene);
     }

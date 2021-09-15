@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 public class HHVacanciesFabric extends VacanciesFabric{
 
-    public HHVacanciesFabric(String link) throws InterruptedException {
-        super(link);
+    public HHVacanciesFabric(String searchText) throws InterruptedException {
+        super(getLinkWithSearchText(searchText));
     }
     @Override
     public ArrayList<VacancyBlock> getVacanciesFrom(Document wholePage) {
@@ -48,5 +48,11 @@ public class HHVacanciesFabric extends VacanciesFabric{
     }
     private static boolean isEmpty(Element block) {
         return block.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy-compensation").text().equals("");
+    }
+    private static String getLinkWithSearchText(String text) {
+        text = text.trim().replace(' ', '+');
+        String link = "https://hh.ru/search/vacancy?clusters=true&text=".concat(text.concat("&enable_snippets=true&L_save_area=True&area=1124&customDomain=1"));
+        System.out.println("Going to    " + link);
+        return link;
     }
 }

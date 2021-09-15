@@ -14,7 +14,7 @@ public class AppWindow extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        GridPane root = (GridPane) loadFXML("mainPage.fxml");
+        GridPane root = (GridPane) loadFXML("FXML/mainPage.fxml");
         Scene scene = new Scene(root);
         primaryStage.setTitle("HHruParser");
         primaryStage.setScene(scene);

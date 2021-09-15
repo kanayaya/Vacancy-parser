@@ -20,7 +20,7 @@ public class MainPageController{
 
     @FXML
     private void click(ActionEvent event) throws IOException, InterruptedException {
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(this.getClass().getResource("vacanciesList.fxml")));
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(this.getClass().getResource("FXML/vacanciesList.fxml")));
 
         VBox root = loader.load();
         VacanciesListController controller = loader.getController();
