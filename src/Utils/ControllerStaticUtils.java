@@ -1,10 +1,10 @@
-package View;
+package Utils;
 
 import javafx.scene.Node;
 import javafx.stage.Stage;
 
-class ControllerStaticUtils {
-    protected static Stage getStageOf(Node node) {
+public class ControllerStaticUtils {
+    public static Stage getStageOf(Node node) {
         return (Stage) node.getScene().getWindow();
     }
 }

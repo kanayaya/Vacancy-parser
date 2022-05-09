@@ -1,27 +1,36 @@
-package Parser;
+package Parser.HH;
 
 
+import Parser.Picker;
+import Parser.VacanciesParser;
+import Parser.VacancyBlock;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
-public class HHVacanciesFabric extends VacanciesFabric{
+public class HHVacanciesParser extends VacanciesParser {
 
-    public HHVacanciesFabric(String searchText) throws InterruptedException {
-        super(getLinkWithSearchText(searchText));
+    public HHVacanciesParser(String link) {
+        super(link);
     }
+
+    @Override
+    public ArrayList<VacancyBlock> getVacancies() throws InterruptedException {
+        return getVacanciesFrom(Picker.repeatedlyGetHtml(getLinkWithSearchText(link)));
+    }
+
     @Override
     public ArrayList<VacancyBlock> getVacanciesFrom(Document wholePage) {
         Elements vacancyBlocks = wholePage.getElementsByAttributeValue("class", "vacancy-serp-item");
-        return HHVacanciesFabric.makeVacanciesArray(vacancyBlocks);
+        return HHVacanciesParser.makeVacanciesArray(vacancyBlocks);
     }
 
     private static ArrayList<VacancyBlock> makeVacanciesArray(Elements vacancyBlocks) {
         ArrayList<VacancyBlock> vacancies = new ArrayList<>(20);
         for (Element vacancyBlock: vacancyBlocks) {
-            vacancies.add(HHVacanciesFabric.getVacancyBlock(vacancyBlock));
+            vacancies.add(HHVacanciesParser.getVacancyBlock(vacancyBlock));
         }
         return vacancies;
     }
@@ -51,8 +60,6 @@ public class HHVacanciesFabric extends VacanciesFabric{
     }
     private static String getLinkWithSearchText(String text) {
         text = text.trim().replace(' ', '+');
-        String link = "https://hh.ru/search/vacancy?clusters=true&text=".concat(text.concat("&enable_snippets=true&L_save_area=True&area=1124&customDomain=1"));
-        System.out.println("Going to    " + link);
-        return link;
+        return "https://hh.ru/search/vacancy?clusters=true&text=".concat(text.concat("&enable_snippets=true&L_save_area=True&area=1124&customDomain=1"));
     }
 }
