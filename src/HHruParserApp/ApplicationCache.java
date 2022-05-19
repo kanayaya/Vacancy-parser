@@ -12,9 +12,13 @@ public class ApplicationCache {
     static final Map<String, FXMLLoader> cachedLoaders = new HashMap<>();
     static String partPath = "../View/FXML/";
 
-    public static Parent getRoot(String name) throws IOException {
+    public static Parent getRoot(String name) {
         if (getCached(name).getRoot() == null) {
-            return cachedLoaders.get(name).load();
+            try {
+                return cachedLoaders.get(name).load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         return cachedLoaders.get(name).getRoot();
     }
@@ -32,7 +36,7 @@ public class ApplicationCache {
         return cachedLoaders.get(name);
     }
 
-    public static Scene makeScene(String name) throws IOException {
+    public static Scene makeScene(String name) {
         return new Scene(getRoot(name));
     }
 }

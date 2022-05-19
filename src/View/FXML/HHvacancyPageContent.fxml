@@ -6,20 +6,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="Controllers.HHVacancyPageController">
-   <Button layoutX="49.0" layoutY="48.0" mnemonicParsing="false" text="К списку"/>
+<AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.HHVacancyPageController">
+   <Button layoutX="49.0" layoutY="48.0" mnemonicParsing="false" onAction="#back" text="К списку" />
    <Label fx:id="name" layoutX="167.0" layoutY="33.0" text="Name">
       <font>
-         <Font size="24.0"/>
+         <Font size="24.0" />
       </font>
    </Label>
    <Label fx:id="salary" layoutX="167.0" layoutY="85.0" text="Salary">
       <font>
-         <Font size="20.0"/>
+         <Font size="20.0" />
       </font>
    </Label>
    <ScrollPane hbarPolicy="NEVER" layoutX="167.0" layoutY="125.0" prefWidth="372.0">
-      <Label fx:id="description" alignment="TOP_LEFT" prefWidth="370.0" text="Description" wrapText="true"/>
+      <Label fx:id="description" alignment="TOP_LEFT" prefWidth="370.0" text="Description" wrapText="true" />
    </ScrollPane>
 </AnchorPane>

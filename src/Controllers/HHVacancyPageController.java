@@ -1,22 +1,19 @@
 package Controllers;
 
+import HHruParserApp.ApplicationCache;
+import HHruParserApp.ApplicationContext;
 import Parser.HH.HHPage;
 import Parser.Page;
-import Parser.VacancyBlock;
 import javafx.fxml.FXML;
-
 import javafx.scene.control.Label;
 
-import java.util.ArrayList;
-
 public class HHVacancyPageController {
-    private ArrayList<VacancyBlock> vacanciesArray;
     @FXML
     public Label name, salary, description;
 
     @FXML
     public void back() {
-
+        ApplicationContext.setRoot(ApplicationCache.getRoot("vacanciesList.fxml"));
     }
 
     public void setProperties(Page page) {

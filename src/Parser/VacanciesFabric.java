@@ -6,43 +6,34 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.GridPane;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class VacanciesFabric {
-    public static GridPane[] get(VacanciesParser parser) {
+    public static Parent[] get(VacanciesParser parser) {
         try {
             System.out.println("Taking vacancies...");
             return getViewedVacancies(parser.getVacancies());
         } catch (NoSuchElementException e) {
-            System.out.println("Error in " + parser.getClass().toString() + ". Maybe wrong key/value or target changed attribute:  " + e);
-        } catch (InterruptedException e) {
-            System.out.println("thread interrupted");
+            System.out.println("Error in " + parser.getClass().getName() + ". Maybe key/value are wrong or target changed attribute:  " + e);
         }
         return new GridPane[0];
     }
-    private static GridPane[] getViewedVacancies(ArrayList<VacancyBlock> vacanciesArray) {
+    private static Parent[] getViewedVacancies(List<Viewable> vacanciesArray) {
         return vacanciesArray.stream()
-                .map(VacancyBlock::getView)
+                .map(Viewable::getView)
                 .collect(Collectors.toList())
-                .toArray(GridPane[]::new);
+                .toArray(Parent[]::new);
     }
 
     public Parent getScene(VacanciesParser parser) {
         FXMLLoader loader = ApplicationCache.getCached("vacanciesList.fxml");
-        Parent root = null;
-        try {
-            root = ApplicationCache.getRoot("vacanciesList.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         VacanciesListController controller = loader.getController();
         controller.setVacancies(get(parser));
 
-        return root;
+        return ApplicationCache.getRoot("vacanciesList.fxml");
     }
 }
 

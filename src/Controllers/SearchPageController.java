@@ -5,6 +5,7 @@ import HHruParserApp.ApplicationContext;
 import Parser.HH.HHVacanciesParser;
 import Parser.VacanciesFabric;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
@@ -16,6 +17,8 @@ public class SearchPageController {
     @FXML
     private TextField searchField;
 
+    private volatile Parent nextPage;
+
     @FXML
     private void click() throws IOException {
 
@@ -25,12 +28,8 @@ public class SearchPageController {
         ApplicationContext.setRoot("spinnerPage.fxml");
         SpinnerPageController controller = ApplicationCache.getCachedController("spinnerPage.fxml");
 
-        Thread searchThread = new Thread(() -> controller.setRoot(new VacanciesFabric().getScene(new HHVacanciesParser(searchFieldText))));
-        searchThread.setDaemon(true);
-        searchThread.start();
-
         searchField.setText("");  //or else if you get back last text will still be in search field
 
-        controller.waitForRoot();
+        controller.switchSceneTo(() -> new VacanciesFabric().getScene(new HHVacanciesParser(searchFieldText)));
     }
 }

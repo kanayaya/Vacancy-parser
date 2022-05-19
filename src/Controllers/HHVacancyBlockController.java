@@ -1,10 +1,12 @@
 package Controllers;
 
+import HHruParserApp.ApplicationContext;
 import Parser.HH.HHPageParser;
 import Parser.HH.HHVacancyBlock;
 import Parser.PageThread;
 import Utils.ControllerStaticUtils;
 
+import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -29,8 +31,7 @@ public class HHVacancyBlockController {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("../View/FXML/HHvacancyPageContent.fxml"));
 
         AnchorPane root = loader.load();
-        Scene showPage = new Scene(root);
-        ControllerStaticUtils.getStageOf(name).setScene(showPage);
+        ApplicationContext.setRoot(root);
 
         while (pageThread.getPage() == null) ;//wait
         HHVacancyPageController controller = loader.getController();

@@ -3,12 +3,13 @@ package Parser.HH;
 
 import Parser.Picker;
 import Parser.VacanciesParser;
-import Parser.VacancyBlock;
+import Parser.Viewable;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HHVacanciesParser extends VacanciesParser {
 
@@ -17,18 +18,18 @@ public class HHVacanciesParser extends VacanciesParser {
     }
 
     @Override
-    public ArrayList<VacancyBlock> getVacancies() throws InterruptedException {
+    public List<Viewable> getVacancies() {
         return getVacanciesFrom(Picker.repeatedlyGetHtml(getLinkWithSearchText(link)));
     }
 
     @Override
-    public ArrayList<VacancyBlock> getVacanciesFrom(Document wholePage) {
+    public List<Viewable> getVacanciesFrom(Document wholePage) {
         Elements vacancyBlocks = wholePage.getElementsByAttributeValue("class", "vacancy-serp-item");
         return HHVacanciesParser.makeVacanciesArray(vacancyBlocks);
     }
 
-    private static ArrayList<VacancyBlock> makeVacanciesArray(Elements vacancyBlocks) {
-        ArrayList<VacancyBlock> vacancies = new ArrayList<>(20);
+    private static List<Viewable> makeVacanciesArray(Elements vacancyBlocks) {
+        ArrayList<Viewable> vacancies = new ArrayList<>(20);
         for (Element vacancyBlock: vacancyBlocks) {
             vacancies.add(HHVacanciesParser.getVacancyBlock(vacancyBlock));
         }
@@ -41,7 +42,8 @@ public class HHVacanciesParser extends VacanciesParser {
                 vacancyBlock.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy-title").attr("href"),
                 getSalary(vacancyBlock),
                 vacancyBlock.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy-employer").text(),
-                getDescription(vacancyBlock)
+                getDescription(vacancyBlock),
+                vacancyBlock.getElementsByAttributeValue("class", "vacancy-serp-item-logo").attr("src")
         );
     }
     private static String getDescription(Element block) {

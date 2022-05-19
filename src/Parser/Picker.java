@@ -7,25 +7,32 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 
 public class Picker {
-    public static Document repeatedlyGetHtml(String link) throws InterruptedException {
+    public static Document repeatedlyGetHtml(String link)  {
         int counter = 1;
         System.out.println("going to " + link);
         Document wholePage;
-        while (true) {
+        while (counter < 20) {
             try {
-                System.out.println(link);
                 wholePage = Jsoup.connect(link).get();
-                break;
+                System.out.println("Successfully got HTML elements!");
+                return wholePage;
             }
             catch (UnknownHostException e) {
                 System.out.println("MissingUrl  " + counter);
                 counter += 1;
-                Thread.sleep(1000);
+                sleep(1000);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("Internet problem", e);
             }
         }
-        System.out.println("Successfully got HTML elements!");
-        return wholePage;
+        throw new RuntimeException("Error: Connection timed out");
+    }
+
+    private static void sleep(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

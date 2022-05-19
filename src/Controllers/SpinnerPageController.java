@@ -18,15 +18,16 @@ public class SpinnerPageController {
 
     private volatile Parent root;
 
-    public void waitForRoot() {
-        waitFor(() -> root != null);
+    public void switchSceneTo(RootFabric fabric) {
+        Thread getter = new Thread(() -> root = fabric.getRoot());
+        getter.setDaemon(true);
+        getter.start();
+        setRootWhen(() -> root != null);
     }
 
-    public void waitFor(Supplier<Boolean> flag) {
-        circles = new Circle[]{leftCircle, centralCircle, rightCircle};
-        leftCircle.setRadius(10);
-        centralCircle.setRadius(15);
-        rightCircle.setRadius(20);
+
+    public void setRootWhen(Supplier<Boolean> flag) {
+        initCircles();
 
         new AnimationTimer() {
             @Override
@@ -40,6 +41,14 @@ public class SpinnerPageController {
             }
         }.start();
     }
+
+    private void initCircles() {
+        circles = new Circle[]{leftCircle, centralCircle, rightCircle};
+        leftCircle.setRadius(10);
+        centralCircle.setRadius(15);
+        rightCircle.setRadius(20);
+    }
+
     private void spin() {
         double w = ApplicationContext.getStage().getWidth();
         double h = ApplicationContext.getStage().getHeight();

@@ -25,7 +25,7 @@ public class VacanciesListController {
     @FXML
     Button backButton;
 
-    public void setVacancies(GridPane[] vacancies) {
+    public void setVacancies(Parent[] vacancies) {
         vacanciesList = new VBox(10, vacancies);
 
         reactionTimer.start();

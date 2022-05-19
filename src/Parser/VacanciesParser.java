@@ -2,7 +2,7 @@ package Parser;
 
 import org.jsoup.nodes.Document;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public abstract class VacanciesParser {
     protected String link;
@@ -11,7 +11,7 @@ public abstract class VacanciesParser {
         this.link = link;
     }
 
-    public abstract ArrayList<VacancyBlock> getVacancies() throws InterruptedException;
+    public abstract List<Viewable> getVacancies() ;
 
-    public abstract ArrayList<VacancyBlock> getVacanciesFrom(Document wholePage);
+    public abstract List<Viewable> getVacanciesFrom(Document wholePage);
 }
