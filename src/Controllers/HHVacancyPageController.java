@@ -3,7 +3,7 @@ package Controllers;
 import HHruParserApp.ApplicationCache;
 import HHruParserApp.ApplicationContext;
 import Parser.HH.HHPage;
-import Parser.Page;
+import Parser.Viewable;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -16,7 +16,7 @@ public class HHVacancyPageController {
         ApplicationContext.setRoot(ApplicationCache.getRoot("vacanciesList.fxml"));
     }
 
-    public void setProperties(Page page) {
+    public void setProperties(Viewable page) {
         HHPage hhpage = (HHPage) page;
         this.name.setText(hhpage.name);
         this.salary.setText(hhpage.salary);

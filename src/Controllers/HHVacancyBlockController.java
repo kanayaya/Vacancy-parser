@@ -17,7 +17,6 @@ import java.io.IOException;
 
 
 public class HHVacancyBlockController {
-    private HHVacancyBlock block;
     private PageThread pageThread;
 
     @FXML
@@ -25,7 +24,7 @@ public class HHVacancyBlockController {
 
     @FXML
     public void click() throws IOException {
-        if (pageThread.isStarted() == false) {
+        if (!pageThread.isStarted()) {
             pageThread.start();
         }
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("../View/FXML/HHvacancyPageContent.fxml"));
@@ -40,13 +39,12 @@ public class HHVacancyBlockController {
 
     @FXML
     public void hover() {
-        if (pageThread.isStarted() == false) {
+        if (!pageThread.isStarted()) {
             pageThread.start();
         }
     }
 
     public void setProperties(HHVacancyBlock block) {
-        this.block = block;
         this.name.setText(block.name);
         this.salary.setText(block.salary);
         this.employer.setText(block.employer);

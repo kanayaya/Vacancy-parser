@@ -1,10 +1,11 @@
 package Parser.HH;
 
-import Parser.Page;
-import javafx.scene.layout.AnchorPane;
+import Parser.Viewable;
+import javafx.scene.Parent;
 
-public class HHPage extends Page {
+public class HHPage implements Viewable {
     public final String
+            name,
             salary,
             employer,
             town,
@@ -23,7 +24,7 @@ public class HHPage extends Page {
                   String description,
                   String abilities,
                   String date) {
-        super(name);
+        this.name = name;
         this.salary = salary;
         this.employer = employer;
         this.town = town;
@@ -35,7 +36,7 @@ public class HHPage extends Page {
 
     }
     @Override
-    public AnchorPane getView() {
+    public Parent getView() {
         return null;
     }
 }

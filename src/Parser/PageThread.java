@@ -3,7 +3,7 @@ package Parser;
 import java.util.NoSuchElementException;
 
 public class PageThread extends Thread {
-        private volatile Page page = null;
+        private volatile Viewable page = null;
         private volatile boolean started = false;
 
         private final PageParser fabric;
@@ -12,7 +12,7 @@ public class PageThread extends Thread {
             this.fabric = fabric;
             this.setPriority(2);
         }
-        public Page getPage() {
+        public Viewable getPage() {
             return page;
         }
         public boolean isStarted() {

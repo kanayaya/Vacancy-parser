@@ -13,23 +13,17 @@ import java.io.IOException;
 
 public class SearchPageController {
     @FXML
-    private Button showVacanciesButton;
-    @FXML
     private TextField searchField;
-
-    private volatile Parent nextPage;
 
     @FXML
     private void click() throws IOException {
-
-        String searchFieldText = searchField.getText();
-        System.out.println("Starting search thread  \"" + searchFieldText + "\"");
+        System.out.println("Starting search thread  \"" + searchField.getText() + "\"");
 
         ApplicationContext.setRoot("spinnerPage.fxml");
-        SpinnerPageController controller = ApplicationCache.getCachedController("spinnerPage.fxml");
 
         searchField.setText("");  //or else if you get back last text will still be in search field
 
-        controller.switchSceneTo(() -> new VacanciesFabric().getScene(new HHVacanciesParser(searchFieldText)));
+        ApplicationCache.<SpinnerPageController>getCachedController("spinnerPage.fxml")
+                .switchSceneTo(() -> new VacanciesFabric().getScene(new HHVacanciesParser(searchField.getText())));
     }
 }
