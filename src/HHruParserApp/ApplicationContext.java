@@ -18,7 +18,7 @@ public class ApplicationContext {
         }
     }
 
-    public static void setRoot(String name) throws IOException {
+    public static void setRoot(String name) {
         cachedStage.getScene().setRoot(ApplicationCache.getRoot(name));
     }
     public static void setRoot(Parent root) {

@@ -1,17 +1,15 @@
 package Parser.HH;
 
-import Parser.PageParser;
 import Parser.Picker;
 import Parser.Viewable;
 import org.jsoup.nodes.Document;
 
-public class HHPageParser extends PageParser {
+public class HHPageParser {
     private final String link;
-    public HHPageParser(HHVacancyBlock block) throws InterruptedException {
-        this.link = block.link;
+    public HHPageParser(String link) {
+        this.link = link;
     }
 
-    @Override
     public Viewable getPage()  {
         Document wholePage = Picker.repeatedlyGetHtml(link);
         return new HHPage(

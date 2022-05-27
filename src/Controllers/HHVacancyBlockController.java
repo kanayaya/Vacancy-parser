@@ -1,19 +1,12 @@
 package Controllers;
 
+import HHruParserApp.ApplicationCache;
 import HHruParserApp.ApplicationContext;
 import Parser.HH.HHPageParser;
 import Parser.HH.HHVacancyBlock;
 import Parser.PageThread;
-import Utils.ControllerStaticUtils;
-
-import javafx.application.Application;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-
-import java.io.IOException;
 
 
 public class HHVacancyBlockController {
@@ -23,37 +16,25 @@ public class HHVacancyBlockController {
     public Label name, salary, employer, description;
 
     @FXML
-    public void click() throws IOException {
-        if (!pageThread.isStarted()) {
-            pageThread.start();
-        }
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("../View/FXML/HHvacancyPageContent.fxml"));
+    public void click() {
+        startPageThread();
 
-        AnchorPane root = loader.load();
-        ApplicationContext.setRoot(root);
+        ApplicationContext.setRoot("spinnerPage.fxml");
 
-        while (pageThread.getPage() == null) ;//wait
-        HHVacancyPageController controller = loader.getController();
-        controller.setProperties(pageThread.getPage());
+        SpinnerPageController controller = ApplicationCache.getCachedController("spinnerPage.fxml");
+        controller.switchSceneTo(() -> pageThread.getPage().getView());
     }
 
     @FXML
     public void hover() {
+        startPageThread();
+    }
+    private void startPageThread() {
         if (!pageThread.isStarted()) {
             pageThread.start();
         }
     }
-
-    public void setProperties(HHVacancyBlock block) {
-        this.name.setText(block.name);
-        this.salary.setText(block.salary);
-        this.employer.setText(block.employer);
-        this.description.setText(block.description);
-
-        try {
-            this.pageThread = new PageThread(new HHPageParser(block));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public void setLink(String link) {
+        this.pageThread = new PageThread(() -> new HHPageParser(link).getPage());
     }
 }
