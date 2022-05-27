@@ -34,7 +34,12 @@ public class HHVacancyBlockController {
             pageThread.start();
         }
     }
-    public void setLink(String link) {
-        this.pageThread = new PageThread(() -> new HHPageParser(link).getPage());
+    public void setProperties(HHVacancyBlock block) {
+        this.name.setText(block.name);
+        this.salary.setText(block.salary);
+        this.employer.setText(block.employer);
+        this.description.setText(block.description);
+
+        this.pageThread = new PageThread(() -> new HHPageParser(block.link).getPage());
     }
 }

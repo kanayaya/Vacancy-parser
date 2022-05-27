@@ -34,23 +34,17 @@ public class HHVacancyBlock implements Viewable {
 
     @Override
     public Parent getView() {
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(this.getClass().getResource("../../View/FXML/HHvacancyBlock.fxml")));
+        String pathToFXML = "../../View/FXML/HHvacancyBlock.fxml";
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(this.getClass().getResource(pathToFXML)));
         GridPane root;
         try {
             root = loader.load();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Problem with file \"" + pathToFXML + "\"", e);
         }
         HHVacancyBlockController controller = loader.getController();
-        setPropertiesTo(controller);
+        controller.setProperties(this);
 
         return root;
-    }
-    private void setPropertiesTo(HHVacancyBlockController controller) {
-        controller.name.setText(name);
-        controller.salary.setText(salary);
-        controller.employer.setText(employer);
-        controller.description.setText(description);
-        controller.setLink(link);
     }
 }
