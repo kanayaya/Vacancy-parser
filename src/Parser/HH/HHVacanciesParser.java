@@ -25,7 +25,9 @@ public class HHVacanciesParser implements VacanciesParser {
         Document wholePage = Picker.repeatedlyGetHtml(link);
         Elements vacancyBlocks = wholePage.getElementsByAttributeValue("class", "vacancy-serp-item");
         List<Viewable> vacancies = getVacanciesFrom(vacancyBlocks);
-        vacancies.add(getPager(wholePage));
+        if (! wholePage.getElementsByAttributeValue("data-qa", "pager-block").isEmpty()) {
+            vacancies.add(getPager(wholePage.getElementsByAttributeValue("data-qa", "pager-block").get(0)));
+        }
         return vacancies;
     }
 
@@ -60,12 +62,8 @@ public class HHVacanciesParser implements VacanciesParser {
         return block.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy-compensation").text().equals("");
     }
 
-    private Viewable getPager(Document wholePage) {
-        System.out.println("1st:     " + (wholePage.getElementsByAttributeValue("data-qa", "first-page").size() == 0));
-        System.out.println("2nd:     " + wholePage.getElementsByAttributeValue("data-qa", "pager-page").size());
-        System.out.println("1st:     " + (wholePage.getElementsByAttributeValue("data-qa", "pager-next").size() == 0));
-        System.out.println("1st:     " + (wholePage.getElementsByAttributeValue("data-qa", "pager-block-dots").size() == 0));
-        return new Pager(wholePage.getElementsByAttributeValue("data-qa", "pager-block").get(0));
+    private Viewable getPager(Element block) {
+        return new Pager(block);
     }
     public static String getLinkWithSearchText(String text) {
         text = text.trim().replace(' ', '+');
