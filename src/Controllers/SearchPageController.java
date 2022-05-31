@@ -27,6 +27,6 @@ public class SearchPageController {
     private Parent getScene() {
         String searchText = searchField.getText();
         searchField.setText("");  //or else if you get back last text will still be in search field
-        return new VacanciesFabric().getScene(new HHVacanciesParser(searchText));
+        return new VacanciesFabric().getScene(new HHVacanciesParser(HHVacanciesParser.getLinkWithSearchText(searchText)));
     }
 }

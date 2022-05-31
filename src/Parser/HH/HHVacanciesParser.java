@@ -1,6 +1,7 @@
 package Parser.HH;
 
 
+import Parser.Pager;
 import Parser.Picker;
 import Parser.VacanciesParser;
 import Parser.Viewable;
@@ -10,30 +11,28 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class HHVacanciesParser extends VacanciesParser {
+public class HHVacanciesParser implements VacanciesParser {
+    private final String link;
 
     public HHVacanciesParser(String link) {
-        super(link);
+       this.link = link;
     }
 
     @Override
     public List<Viewable> getVacancies() {
-        return getVacanciesFrom(Picker.repeatedlyGetHtml(getLinkWithSearchText(link)));
-    }
-
-    @Override
-    public List<Viewable> getVacanciesFrom(Document wholePage) {
+        Document wholePage = Picker.repeatedlyGetHtml(link);
         Elements vacancyBlocks = wholePage.getElementsByAttributeValue("class", "vacancy-serp-item");
-        return HHVacanciesParser.makeVacanciesArray(vacancyBlocks);
+        List<Viewable> vacancies = getVacanciesFrom(vacancyBlocks);
+        vacancies.add(getPager(wholePage));
+        return vacancies;
     }
 
-    private static List<Viewable> makeVacanciesArray(Elements vacancyBlocks) {
-        ArrayList<Viewable> vacancies = new ArrayList<>(20);
-        for (Element vacancyBlock: vacancyBlocks) {
-            vacancies.add(HHVacanciesParser.getVacancyBlock(vacancyBlock));
-        }
-        return vacancies;
+    private List<Viewable> getVacanciesFrom(Elements vacancyBlocks) {
+        return vacancyBlocks.stream().
+                map(HHVacanciesParser::getVacancyBlock).
+                collect(Collectors.toList());
     }
 
     private static HHVacancyBlock getVacancyBlock(Element vacancyBlock) {
@@ -60,7 +59,15 @@ public class HHVacanciesParser extends VacanciesParser {
     private static boolean isEmpty(Element block) {
         return block.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy-compensation").text().equals("");
     }
-    private static String getLinkWithSearchText(String text) {
+
+    private Viewable getPager(Document wholePage) {
+        System.out.println("1st:     " + (wholePage.getElementsByAttributeValue("data-qa", "first-page").size() == 0));
+        System.out.println("2nd:     " + wholePage.getElementsByAttributeValue("data-qa", "pager-page").size());
+        System.out.println("1st:     " + (wholePage.getElementsByAttributeValue("data-qa", "pager-next").size() == 0));
+        System.out.println("1st:     " + (wholePage.getElementsByAttributeValue("data-qa", "pager-block-dots").size() == 0));
+        return new Pager(wholePage.getElementsByAttributeValue("data-qa", "pager-block").get(0));
+    }
+    public static String getLinkWithSearchText(String text) {
         text = text.trim().replace(' ', '+');
         return "https://hh.ru/search/vacancy?clusters=true&text=".concat(text.concat("&enable_snippets=true&L_save_area=True&area=1124&customDomain=1"));
     }

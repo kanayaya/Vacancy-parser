@@ -1,7 +1,6 @@
 package Parser.HH;
 
 import Controllers.HHVacancyPageController;
-import HHruParserApp.ApplicationContext;
 import Parser.Viewable;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

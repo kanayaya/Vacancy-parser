@@ -5,8 +5,6 @@ import Parser.Viewable;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import java.util.Objects;
-
 public class HHPageParser {
     private final String link;
     public HHPageParser(String link) {
@@ -22,12 +20,12 @@ public class HHPageParser {
                 "",
                 "",
                 "",
-                getDescription(wholePage),
+                getDescriptionFrom(wholePage),
                 "",
                 "");
     }
 
-    private String getDescription(Document wholePage) {
+    private String getDescriptionFrom(Document wholePage) {
         StringBuilder result = new StringBuilder();
 
         for (Element element : wholePage.getElementsByAttributeValue("data-qa", "vacancy-description").get(0).children()) {

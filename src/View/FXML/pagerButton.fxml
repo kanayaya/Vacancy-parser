@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+
+
+<Button fx:id="pagerButton" mnemonicParsing="false" onAction="#click" prefHeight="60.0" prefWidth="60.0" text="Button" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PagerButtonController" />

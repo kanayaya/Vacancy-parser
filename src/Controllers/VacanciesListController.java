@@ -6,17 +6,15 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-
-import java.io.IOException;
 
 public class VacanciesListController {
     private VBox vacanciesList;
     private final AnimationTimer reactionTimer = new AnimationTimer() {
         @Override
         public void handle(long l) {
-            vacanciesList.getChildren().forEach(block -> ((GridPane) block).setMaxWidth(mainPane.getWidth() - 50));
+            vacanciesList.getChildren().forEach(block -> ((Region) block).setMaxWidth(mainPane.getWidth() - 50));
         }
     };
 
@@ -30,9 +28,10 @@ public class VacanciesListController {
 
         reactionTimer.start();
         mainPane.setContent(vacanciesList);
+        mainPane.setVvalue(0);
     }
 
-    public void backToSearch() throws IOException {
+    public void backToSearch() {
         mainPane.setVvalue(0.0);
         ApplicationContext.setRoot("mainPage.fxml");
         reactionTimer.stop();
