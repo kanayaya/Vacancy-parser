@@ -1,7 +1,6 @@
 package Parser.HH;
 
 
-import Parser.Pager;
 import Parser.Picker;
 import Parser.VacanciesParser;
 import Parser.Viewable;
@@ -9,7 +8,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,10 +23,14 @@ public class HHVacanciesParser implements VacanciesParser {
         Document wholePage = Picker.repeatedlyGetHtml(link);
         Elements vacancyBlocks = wholePage.getElementsByAttributeValue("class", "vacancy-serp-item");
         List<Viewable> vacancies = getVacanciesFrom(vacancyBlocks);
-        if (! wholePage.getElementsByAttributeValue("data-qa", "pager-block").isEmpty()) {
-            vacancies.add(getPager(wholePage.getElementsByAttributeValue("data-qa", "pager-block").get(0)));
+        if (isPagerIn(wholePage)) {
+            vacancies.add(HHPagerParser.getPager(wholePage.getElementsByAttributeValue("data-qa", "pager-block").get(0)));
         }
         return vacancies;
+    }
+
+    private boolean isPagerIn(Document wholePage) {
+        return !wholePage.getElementsByAttributeValue("data-qa", "pager-block").isEmpty();
     }
 
     private List<Viewable> getVacanciesFrom(Elements vacancyBlocks) {
@@ -62,9 +64,6 @@ public class HHVacanciesParser implements VacanciesParser {
         return block.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy-compensation").text().equals("");
     }
 
-    private Viewable getPager(Element block) {
-        return new Pager(block);
-    }
     public static String getLinkWithSearchText(String text) {
         text = text.trim().replace(' ', '+');
         return "https://hh.ru/search/vacancy?clusters=true&text=".concat(text.concat("&enable_snippets=true&L_save_area=True&area=1124&customDomain=1"));
