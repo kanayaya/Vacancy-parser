@@ -8,7 +8,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
-public class HHPage implements Viewable {
+public final class HHPage implements Viewable {
     public final String
             name,
             salary,

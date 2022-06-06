@@ -11,7 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
 
-public class HHVacancyBlock implements Viewable {
+public final class HHVacancyBlock implements Viewable {
     public final String name, link, salary, employer, description;
     public final URL employerImageURL;
 

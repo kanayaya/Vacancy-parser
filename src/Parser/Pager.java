@@ -6,7 +6,7 @@ import javafx.scene.layout.HBox;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pager implements Viewable {
+public final class Pager implements Viewable {
     private final List<Viewable> components;
 
     public Pager(ArrayList<Viewable> components) {
