@@ -3,8 +3,8 @@ package Parser.HH;
 import Controllers.HHVacancyPageController;
 import Parser.Viewable;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Region;
 
 import java.io.IOException;
 
@@ -41,7 +41,7 @@ public final class HHPage implements Viewable {
 
     }
     @Override
-    public Parent getView() {
+    public Region getView() {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("../../View/FXML/HHvacancyPageContent.fxml"));
 
         AnchorPane root;

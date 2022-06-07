@@ -3,8 +3,8 @@ package Parser.HH;
 import Controllers.HHVacancyBlockController;
 import Parser.Viewable;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -33,7 +33,7 @@ public final class HHVacancyBlock implements Viewable {
     }
 
     @Override
-    public Parent getView() {
+    public Region getView() {
         String pathToFXML = "../../View/FXML/HHvacancyBlock.fxml";
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(this.getClass().getResource(pathToFXML)));
         GridPane root;
