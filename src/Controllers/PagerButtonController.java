@@ -23,6 +23,6 @@ public class PagerButtonController {
         if (link == null) return;
         ApplicationContext.setRoot("spinnerPage.fxml");
         SpinnerPageController controller = ApplicationCache.getCachedController("spinnerPage.fxml");
-        controller.switchSceneTo(() -> new VacanciesFabric().getScene(new HHVacanciesParser(" https://hh.ru/" + link)));
+        controller.switchSceneTo(() -> new VacanciesFabric().getScene(new HHVacanciesParser(link)));
     }
 }
