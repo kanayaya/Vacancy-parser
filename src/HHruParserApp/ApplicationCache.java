@@ -1,8 +1,8 @@
 package HHruParserApp;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Region;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -30,7 +30,7 @@ public class ApplicationCache {
         }
     }
 
-    public static Parent getRoot(String name) {
+    public static Region getRoot(String name) {
         return getCached(name).getRoot();
     }
 

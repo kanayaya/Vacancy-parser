@@ -23,7 +23,7 @@ public class VacanciesListController {
     @FXML
     Button backButton;
 
-    public void setVacancies(Parent[] vacancies) {
+    public void setVacancies(Region[] vacancies) {
         vacanciesList = new VBox(10, vacancies);
 
         reactionTimer.start();

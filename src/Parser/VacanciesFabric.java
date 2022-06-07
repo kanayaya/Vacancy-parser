@@ -2,17 +2,17 @@ package Parser;
 
 import Controllers.VacanciesListController;
 import HHruParserApp.ApplicationCache;
-import javafx.scene.Parent;
+import javafx.scene.layout.Region;
 
 public class VacanciesFabric {
 
-    public Parent getScene(VacanciesParser parser) {
+    public Region getScene(VacanciesParser parser) {
 
         System.out.println("Taking vacancies...");
-        Parent[] result = parser.getVacancies().
+        Region[] result = parser.getVacancies().
                 stream().
                 map(Viewable::getView).
-                toArray(Parent[]::new);
+                toArray(Region[]::new);
 
         ApplicationCache.<VacanciesListController>getCachedController("vacanciesList.fxml").setVacancies(result);
 
