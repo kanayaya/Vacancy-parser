@@ -2,7 +2,6 @@ package Parser;
 
 import Controllers.PagerButtonController;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.layout.Region;
 
 import java.io.IOException;

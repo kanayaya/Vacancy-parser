@@ -3,7 +3,6 @@ package Controllers;
 import HHruParserApp.ApplicationContext;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Region;

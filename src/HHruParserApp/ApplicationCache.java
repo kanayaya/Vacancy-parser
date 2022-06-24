@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ApplicationCache {
-    static final Map<String, FXMLLoader> cachedLoaders = new HashMap<>();
-    static String partPath = "../View/FXML/";
+    private static final Map<String, FXMLLoader> cachedLoaders = new HashMap<>();
+    private static final String partPath = "../View/FXML/";
 
     private static FXMLLoader getCached(String name) {
         if (cachedLoaders.get(name) == null) {

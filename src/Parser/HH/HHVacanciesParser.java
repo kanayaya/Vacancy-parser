@@ -30,16 +30,16 @@ public class HHVacanciesParser implements VacanciesParser {
     }
 
     private boolean isPagerIn(Document wholePage) {
-        return !wholePage.getElementsByAttributeValue("data-qa", "pager-block").isEmpty();
+        return ! wholePage.getElementsByAttributeValue("data-qa", "pager-block").isEmpty();
     }
 
     private List<Viewable> getVacanciesFrom(Elements vacancyBlocks) {
         return vacancyBlocks.stream().
-                map(HHVacanciesParser::getVacancyBlock).
+                map(HHVacanciesParser::parseVacancyBlock).
                 collect(Collectors.toList());
     }
 
-    private static HHVacancyBlock getVacancyBlock(Element vacancyBlock) {
+    private static Viewable parseVacancyBlock(Element vacancyBlock) {
         return new HHVacancyBlock(
                 vacancyBlock.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy-title").text(),
                 vacancyBlock.getElementsByAttributeValue("data-qa", "vacancy-serp__vacancy-title").attr("href"),
